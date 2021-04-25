@@ -1,41 +1,41 @@
--- Необходимо проанализировать данные каждой таблицы и исправить 
--- ошибки и несоответствия, в том числе по столбцам связи,
--- используя команды CRUD
+-- РќРµРѕР±С…РѕРґРёРјРѕ РїСЂРѕР°РЅР°Р»РёР·РёСЂРѕРІР°С‚СЊ РґР°РЅРЅС‹Рµ РєР°Р¶РґРѕР№ С‚Р°Р±Р»РёС†С‹ Рё РёСЃРїСЂР°РІРёС‚СЊ 
+-- РѕС€РёР±РєРё Рё РЅРµСЃРѕРѕС‚РІРµС‚СЃС‚РІРёСЏ, РІ С‚РѕРј С‡РёСЃР»Рµ РїРѕ СЃС‚РѕР»Р±С†Р°Рј СЃРІСЏР·Рё,
+-- РёСЃРїРѕР»СЊР·СѓСЏ РєРѕРјР°РЅРґС‹ CRUD
 
 USE vk;
 SHOW TABLES;
 
 
 
--- Анализируем данные пользователей
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 SELECT * FROM users LIMIT 10;
 
--- Приводим в порядок временные метки
+-- РџСЂРёРІРѕРґРёРј РІ РїРѕСЂСЏРґРѕРє РІСЂРµРјРµРЅРЅС‹Рµ РјРµС‚РєРё
 SELECT * FROM users WHERE updated_at < created_at;
 UPDATE users SET updated_at = NOW() WHERE updated_at < created_at; 
 
--- Смотрим структуру таблицы пользователей
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№
 DESC users;
 
 
 
 
--- Анализируем данные профилей
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ РїСЂРѕС„РёР»РµР№
 SELECT * FROM profiles LIMIT 10;
 
--- Генерация значения страна
--- Создаём временную таблицу стран
+-- Р“РµРЅРµСЂР°С†РёСЏ Р·РЅР°С‡РµРЅРёСЏ СЃС‚СЂР°РЅР°
+-- РЎРѕР·РґР°С‘Рј РІСЂРµРјРµРЅРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ СЃС‚СЂР°РЅ
 CREATE TEMPORARY TABLE countries(country VARCHAR(100));
 
--- Добавим значения
+-- Р”РѕР±Р°РІРёРј Р·РЅР°С‡РµРЅРёСЏ
 INSERT INTO countries VALUES
 ('Colombia'), ('Panama'), ('Uganda'), ('Lao People\'s Democratic Republic'),
 ('Madagascar'), ('Guatemala'), ('Equatorial Guinea'), ('Belgium'), ('Cyprus');
   
--- Вставляем случайное значение страны в столбец country  
+-- Р’СЃС‚Р°РІР»СЏРµРј СЃР»СѓС‡Р°Р№РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ СЃС‚СЂР°РЅС‹ РІ СЃС‚РѕР»Р±РµС† country  
 UPDATE profiles SET country = (SELECT country FROM countries ORDER BY RAND() LIMIT 1);  
 
--- Приводим в порядок временные метки
+-- РџСЂРёРІРѕРґРёРј РІ РїРѕСЂСЏРґРѕРє РІСЂРµРјРµРЅРЅС‹Рµ РјРµС‚РєРё
 SELECT * FROM profiles WHERE birthday > created_at;
 UPDATE profiles SET birthday = NOW() - INTERVAL 30 DAY WHERE birthday > created_at; 
 UPDATE profiles SET created_at = NOW() - INTERVAL 15 DAY WHERE birthday > created_at; 
@@ -43,31 +43,31 @@ UPDATE profiles SET created_at = NOW() - INTERVAL 15 DAY WHERE birthday > create
 SELECT * FROM profiles WHERE updated_at < created_at;
 UPDATE profiles SET updated_at = NOW() WHERE updated_at < created_at; 
 
--- Смотрим структуру таблицы профилей
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹ РїСЂРѕС„РёР»РµР№
 DESC profiles;
 
 
 
--- Анализируем данные сообщений
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ СЃРѕРѕР±С‰РµРЅРёР№
 SELECT * FROM messages LIMIT 10;
 
--- Смотрим структуру таблицы сообщений
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹ СЃРѕРѕР±С‰РµРЅРёР№
 DESC messages;
 
 
--- Анализируем данные медиаконтента
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ РјРµРґРёР°РєРѕРЅС‚РµРЅС‚Р°
 SELECT * FROM media LIMIT 10;
 
--- Создаём временную таблицу форматов медиафайлов
+-- РЎРѕР·РґР°С‘Рј РІСЂРµРјРµРЅРЅСѓСЋ С‚Р°Р±Р»РёС†Сѓ С„РѕСЂРјР°С‚РѕРІ РјРµРґРёР°С„Р°Р№Р»РѕРІ
 CREATE TEMPORARY TABLE extensions (name VARCHAR(10));
 
--- Заполняем значениями
+-- Р—Р°РїРѕР»РЅСЏРµРј Р·РЅР°С‡РµРЅРёСЏРјРё
 INSERT INTO extensions VALUES ('jpeg'), ('mp4'), ('mp3'), ('avi'), ('png');
 
--- Проверяем
+-- РџСЂРѕРІРµСЂСЏРµРј
 SELECT * FROM extensions;
 
--- Обновляем ссылку на файл
+-- РћР±РЅРѕРІР»СЏРµРј СЃСЃС‹Р»РєСѓ РЅР° С„Р°Р№Р»
 UPDATE media SET filename = CONCAT(
   'http://dropbox.net/vk/',
   filename,
@@ -75,38 +75,38 @@ UPDATE media SET filename = CONCAT(
   (SELECT name FROM extensions ORDER BY RAND() LIMIT 1)
 );
 
--- Обновляем размер файлов
+-- РћР±РЅРѕРІР»СЏРµРј СЂР°Р·РјРµСЂ С„Р°Р№Р»РѕРІ
 UPDATE media SET size = FLOOR(10000 + (RAND() * 1000000)) WHERE size < 1000;
 
--- Заполняем метаданные
+-- Р—Р°РїРѕР»РЅСЏРµРј РјРµС‚Р°РґР°РЅРЅС‹Рµ
 UPDATE media SET metadata = CONCAT('{"owner":"', 
   (SELECT CONCAT(first_name, ' ', last_name) FROM users WHERE id = user_id),
   '"}');
  
--- Смотрим структуру таблицы медиаконтента
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹ РјРµРґРёР°РєРѕРЅС‚РµРЅС‚Р°
 DESC media;
 
--- Возвращаем столбцу метеданных правильный тип, если нужно
+-- Р’РѕР·РІСЂР°С‰Р°РµРј СЃС‚РѕР»Р±С†Сѓ РјРµС‚РµРґР°РЅРЅС‹С… РїСЂР°РІРёР»СЊРЅС‹Р№ С‚РёРї, РµСЃР»Рё РЅСѓР¶РЅРѕ
 ALTER TABLE media MODIFY COLUMN metadata JSON;
 
--- Анализируем типы медиаконтента
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј С‚РёРїС‹ РјРµРґРёР°РєРѕРЅС‚РµРЅС‚Р°
 SELECT * FROM media_types;
 
--- Анализируем данные
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ
 SELECT * FROM media LIMIT 10;
 
 
 
--- Смотрим структуру таблицы дружбы
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹ РґСЂСѓР¶Р±С‹
 DESC friendship;
 
--- Анализируем данные
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ
 SELECT * FROM friendship LIMIT 10;
 
--- Анализируем данные когда user_id = friend_id
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ РєРѕРіРґР° user_id = friend_id
 SELECT * FROM friendship WHERE user_id = friend_id;
 
--- Приводим в порядок временные метки
+-- РџСЂРёРІРѕРґРёРј РІ РїРѕСЂСЏРґРѕРє РІСЂРµРјРµРЅРЅС‹Рµ РјРµС‚РєРё
 SELECT * FROM friendship WHERE updated_at < created_at;
 UPDATE friendship SET updated_at = NOW() WHERE updated_at < created_at; 
 
@@ -116,13 +116,13 @@ UPDATE friendship SET confirmed_at = created_at WHERE confirmed_at < created_at;
 SELECT * FROM friendship WHERE confirmed_at > updated_at;
 UPDATE friendship SET confirmed_at = updated_at WHERE confirmed_at > updated_at;
 
--- Анализируем данные 
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ 
 SELECT * FROM friendship_statuses;
 
--- Очищаем таблицу
+-- РћС‡РёС‰Р°РµРј С‚Р°Р±Р»РёС†Сѓ
 TRUNCATE friendship_statuses;
 
--- Вставляем значения статусов дружбы
+-- Р’СЃС‚Р°РІР»СЏРµРј Р·РЅР°С‡РµРЅРёСЏ СЃС‚Р°С‚СѓСЃРѕРІ РґСЂСѓР¶Р±С‹
 INSERT INTO friendship_statuses (name) VALUES
   ('Requested'),
   ('Confirmed'),
@@ -130,26 +130,26 @@ INSERT INTO friendship_statuses (name) VALUES
  
 
  
- -- Смотрим структуру таблицы групп
+ -- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹ РіСЂСѓРїРї
 DESC communities;
 
--- Анализируем данные
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј РґР°РЅРЅС‹Рµ
 SELECT * FROM communities;
  
- -- Удаляем часть групп
+ -- РЈРґР°Р»СЏРµРј С‡Р°СЃС‚СЊ РіСЂСѓРїРї
 DELETE FROM communities WHERE id > 30;
 
 
- -- Смотрим структуру таблицы групп
+ -- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹ РіСЂСѓРїРї
 DESC communities_users;
 
--- Анализируем таблицу связи пользователей и групп
+-- РђРЅР°Р»РёР·РёСЂСѓРµРј С‚Р°Р±Р»РёС†Сѓ СЃРІСЏР·Рё РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ Рё РіСЂСѓРїРї
 SELECT * FROM communities_users;
 
--- Очищаем таблицу
+-- РћС‡РёС‰Р°РµРј С‚Р°Р±Р»РёС†Сѓ
 TRUNCATE communities_users;
  
--- Заполняем новыми значениями
+-- Р—Р°РїРѕР»РЅСЏРµРј РЅРѕРІС‹РјРё Р·РЅР°С‡РµРЅРёСЏРјРё
 UPDATE communities_users SET 
 community_id = FLOOR(1 + RAND() * 30),
 user_id = FLOOR(1 + RAND() * 100);
