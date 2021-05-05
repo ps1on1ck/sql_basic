@@ -1,6 +1,6 @@
--- 1.Создать и заполнить таблицы лайков и постов.
+п»ї-- 1.РЎРѕР·РґР°С‚СЊ Рё Р·Р°РїРѕР»РЅРёС‚СЊ С‚Р°Р±Р»РёС†С‹ Р»Р°Р№РєРѕРІ Рё РїРѕСЃС‚РѕРІ.
 
--- Таблица лайков
+-- РўР°Р±Р»РёС†Р° Р»Р°Р№РєРѕРІ
 DROP TABLE IF EXISTS likes;
 CREATE TABLE likes (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -10,7 +10,7 @@ CREATE TABLE likes (
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Временная таблица типов лайков
+-- Р’СЂРµРјРµРЅРЅР°СЏ С‚Р°Р±Р»РёС†Р° С‚РёРїРѕРІ Р»Р°Р№РєРѕРІ
 DROP TABLE IF EXISTS target_types;
 CREATE TEMPORARY TABLE target_types (
   name VARCHAR(100) NOT NULL UNIQUE
@@ -22,7 +22,7 @@ INSERT INTO target_types (name) VALUES
   ('media'),
   ('posts');
 
--- Заполняем лайки
+-- Р—Р°РїРѕР»РЅСЏРµРј Р»Р°Р№РєРё
 INSERT INTO likes 
   SELECT 
     id, 
@@ -32,10 +32,10 @@ INSERT INTO likes
     CURRENT_TIMESTAMP 
   FROM messages;
 
--- Проверим
+-- РџСЂРѕРІРµСЂРёРј
 SELECT * FROM likes LIMIT 10;
 
--- Создадим таблицу постов
+-- РЎРѕР·РґР°РґРёРј С‚Р°Р±Р»РёС†Сѓ РїРѕСЃС‚РѕРІ
 DROP TABLE IF EXISTS posts;
 CREATE TABLE posts (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -71,9 +71,9 @@ UNLOCK TABLES;
 
 -- Dump completed on 2021-05-04 17:50:50
 
--- Проверим
+-- РџСЂРѕРІРµСЂРёРј
 SELECT * FROM posts LIMIT 10;
 
--- Приводим в порядок временные метки
+-- РџСЂРёРІРѕРґРёРј РІ РїРѕСЂСЏРґРѕРє РІСЂРµРјРµРЅРЅС‹Рµ РјРµС‚РєРё
 SELECT * FROM posts WHERE updated_at < created_at;
 UPDATE posts SET updated_at = NOW() WHERE updated_at < created_at; 

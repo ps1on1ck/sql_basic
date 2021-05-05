@@ -1,20 +1,20 @@
--- 2.Создать все необходимые внешние ключи и диаграмму отношений.
+п»ї-- 2.РЎРѕР·РґР°С‚СЊ РІСЃРµ РЅРµРѕР±С…РѕРґРёРјС‹Рµ РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё Рё РґРёР°РіСЂР°РјРјСѓ РѕС‚РЅРѕС€РµРЅРёР№.
 
 
--- Смотрим структуру таблицы
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹
 DESC profiles;
 
--- Добавляем внешние ключи
+-- Р”РѕР±Р°РІР»СЏРµРј РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё
 ALTER TABLE profiles
   ADD CONSTRAINT profiles_user_id_fk 
     FOREIGN KEY (user_id) REFERENCES users(id)
       ON DELETE CASCADE;
      
--- Для таблицы сообщений
--- Смотрим структуру таблицы
+-- Р”Р»СЏ С‚Р°Р±Р»РёС†С‹ СЃРѕРѕР±С‰РµРЅРёР№
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹
 DESC messages;
 
--- Добавляем внешние ключи
+-- Р”РѕР±Р°РІР»СЏРµРј РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё
 ALTER TABLE messages
   ADD CONSTRAINT messages_from_user_id_fk 
     FOREIGN KEY (from_user_id) REFERENCES users(id),
@@ -22,11 +22,11 @@ ALTER TABLE messages
     FOREIGN KEY (to_user_id) REFERENCES users(id);
      
 
--- Для таблицы медиа
--- Смотрим структуру таблицы
+-- Р”Р»СЏ С‚Р°Р±Р»РёС†С‹ РјРµРґРёР°
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹
 DESC media;
 
--- Добавляем внешние ключи
+-- Р”РѕР±Р°РІР»СЏРµРј РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё
 ALTER TABLE media
   ADD CONSTRAINT media_user_id_fk 
     FOREIGN KEY (user_id) REFERENCES users(id)
@@ -34,19 +34,19 @@ ALTER TABLE media
   ADD CONSTRAINT media_media_type_id_fk 
     FOREIGN KEY (media_type_id) REFERENCES media_types(id);
    
--- Для таблицы communities users
--- Смотрим структуру таблицы
+-- Р”Р»СЏ С‚Р°Р±Р»РёС†С‹ communities users
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹
 DESC communities_users;
 
--- Добавляем внешние ключи
+-- Р”РѕР±Р°РІР»СЏРµРј РІРЅРµС€РЅРёРµ РєР»СЋС‡Рё
 ALTER TABLE communities_users
   ADD CONSTRAINT communities_users_user_id_fk 
     FOREIGN KEY (user_id) REFERENCES users(id),
   ADD CONSTRAINT communities_users_community_id_fk 
     FOREIGN KEY (community_id) REFERENCES communities(id);
    
--- Для таблицы friendship
--- Смотрим структуру таблицы
+-- Р”Р»СЏ С‚Р°Р±Р»РёС†С‹ friendship
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹
 DESC friendship; 
    
 ALTER TABLE friendship
@@ -61,8 +61,8 @@ ALTER TABLE friendship
       ON DELETE CASCADE;
       
 
--- Для таблицы posts
--- Смотрим структуру таблицы
+-- Р”Р»СЏ С‚Р°Р±Р»РёС†С‹ posts
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹
 DESC posts; 
    
 ALTER TABLE posts
@@ -76,8 +76,8 @@ ALTER TABLE posts
 	  ON DELETE SET NULL;
 
 	 
--- Для таблицы likes
--- Смотрим структуру таблицы
+-- Р”Р»СЏ С‚Р°Р±Р»РёС†С‹ likes
+-- РЎРјРѕС‚СЂРёРј СЃС‚СЂСѓРєС‚СѓСЂСѓ С‚Р°Р±Р»РёС†С‹
 DESC likes; 
 
 ALTER TABLE likes
