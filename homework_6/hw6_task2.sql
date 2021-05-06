@@ -82,7 +82,10 @@ DESC likes;
 
 ALTER TABLE likes
   ADD CONSTRAINT likes_user_id_fk 
-    FOREIGN KEY (user_id) REFERENCES users(id),
-  ADD CONSTRAINT likes_target_id_fk 
-    FOREIGN KEY (target_id) REFERENCES users(id)
-	  ON DELETE CASCADE;
+    FOREIGN KEY (user_id) REFERENCES users(id);
+--   ADD CONSTRAINT likes_target_id_fk 
+--     FOREIGN KEY (target_id) REFERENCES users(id)
+-- 	  ON DELETE CASCADE;
+
+	 
+-- ALTER TABLE likes DROP FOREIGN KEY likes_target_id_fk;
