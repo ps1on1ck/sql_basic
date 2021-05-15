@@ -1,6 +1,25 @@
 ﻿-- 4.Вывести для каждого пользователя количество созданных сообщений, постов, загруженных медиафайлов и поставленных лайков.
 
 SELECT 
+  users.first_name,
+  users.last_name,
+  COUNT(DISTINCT posts.id) AS 'Posts count',
+  COUNT(DISTINCT messages.id) AS 'Message count',
+  COUNT(DISTINCT media.id) AS 'Message count', 
+  COUNT(DISTINCT likes.id) AS 'Likes count' 
+  FROM users
+    LEFT JOIN messages 
+      ON users.id = messages.from_user_id
+    LEFT JOIN posts
+      ON users.id = posts.user_id 
+    LEFT JOIN likes
+      ON users.id = likes.user_id
+    LEFT JOIN media
+      ON users.id = media.user_id
+  GROUP BY users.id;
+
+ 
+SELECT 
   users.id,
   CONCAT(users.first_name, ' ', users.last_name) AS user,
   posts_count AS 'Posts count',
